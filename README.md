@@ -1,74 +1,39 @@
-面试题29. 顺时针打印矩阵
+面试题10- II. 青蛙跳台阶问题
 难度
 简单
 
-42
+31
 
 
 
 
 
-输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
- 
+一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。
 示例 1：
-输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
-输出：[1,2,3,6,9,8,7,4,5]
+输入：n = 2
+输出：2
 示例 2：
-输入：matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
-输出：[1,2,3,4,8,12,11,10,9,5,6,7]
+输入：n = 7
+输出：21
+提示：
+0 <= n <= 100
+注意：本题与主站 70 题相同：https://leetcode-cn.com/problems/climbing-stairs/
  
-限制：
-0 <= matrix.length <= 100
-0 <= matrix[i].length <= 100
-注意：本题与主站 54 题相同：https://leetcode-cn.com/problems/spiral-matrix/
-通过次数15,502提交次数36,099
 
 
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
-int* spiralOrder(int** matrix, int matrixSize, int* matrixColSize, int* returnSize){
-    
-    if(matrix == NULL || matrixSize == 0){
-        *returnSize = 0 ;
-        return NULL;
-        
-    }
-
-    int p = 0,q,m = 0 ,n;//上下左右
-    q = matrixSize - 1;
-    n = *matrixColSize - 1 ;
-    int i,count = 0;
-    int *res = (int*)malloc( sizeof(int)* (*matrixColSize) * matrixSize);
-
-    while( 1 ){
-
-        for( i = m ; i <= n ; i++ ){
-            res[count++] = matrix[p][i];
-        }
-        if( ++p > q ){
-            break;
-        }
-        for( i = p ; i <= q ; i++ ){
-            res[count++] = matrix[i][n];
-        }
-        if( --n < m ){
-            break;
-        }
-        for( i = n ; i >= m ; i-- ){
-            res[count++] = matrix[q][i];
-        }
-        if( --q < p ){
-            break;
-        }
-        for( i = q ; i >= p ; i-- ){
-            res[count++] = matrix[i][m];
-        }
-        if( ++m > n ){
-             break;
-        }           
-
-    }
-    *returnSize = count;
-    return res;
+int numWays(int n)
+{
+    int sum, i, a = 1, b = 2;
+	if(n == 0 || n == 1)
+		return 1;
+	if(n == 2)
+		return 2;
+	for(i = 2; i < n; i ++)
+	{
+		sum = ( a + b ) % 1000000007;
+		a = b;
+		b = sum;
+	}
+	return sum;
 }
