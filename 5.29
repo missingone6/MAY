@@ -1,0 +1,44 @@
+面试题24. 反转链表
+定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点。
+
+ 
+
+示例:
+
+输入: 1->2->3->4->5->NULL
+输出: 5->4->3->2->1->NULL
+
+ 
+
+限制：
+
+0 <= 节点个数 <= 5000
+
+
+思路：用递归方法解决，递归等价条件分析
+
+原链表是1->2->3->4->NULL
+
+我们把 2->3->4 递归成 4->3->2。不过，1 这个节点我们并没有去碰它，所以 1 的 next 节点仍然是连接这 2。
+接下来只需要把节点 2 的 next 指向 1，然后把 1 的 next 指向 null.
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+
+
+struct ListNode* reverseList(struct ListNode* head){
+    if( head == NULL ||  head->next == NULL ){
+        return head;
+    }
+    struct ListNode *p = reverseList(head->next) , *t = head->next;
+    t->next = head;
+    head->next = NULL;
+
+    return p;  
+}
+
